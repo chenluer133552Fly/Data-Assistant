@@ -1,0 +1,119 @@
+.feedback-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.feedback {
+  background: var(--bg-primary);
+  border-radius: 12px;
+  padding: 24px;
+  width: 440px;
+  max-width: 90vw;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+}
+
+.feedback__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.feedback__title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.feedback__close {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: var(--text-muted);
+  border-radius: 4px;
+}
+
+.feedback__close:hover {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.feedback__question {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+
+.feedback__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.feedback__tag {
+  padding: 6px 14px;
+  font-size: 13px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  color: var(--text-secondary);
+  transition: all 0.15s;
+}
+
+.feedback__tag:hover {
+  border-color: var(--text-secondary);
+}
+
+.feedback__tag--active {
+  background: var(--text-primary);
+  color: white;
+  border-color: var(--text-primary);
+}
+
+.feedback__textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-primary);
+  resize: vertical;
+  font-family: inherit;
+}
+
+.feedback__textarea::placeholder {
+  color: var(--text-muted);
+}
+
+.feedback__textarea:focus {
+  outline: none;
+  border-color: var(--text-secondary);
+}
+
+.feedback__footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+.feedback__submit {
+  padding: 8px 24px;
+  font-size: 14px;
+  font-weight: 500;
+  background: var(--text-primary);
+  color: white;
+  border-radius: 6px;
+  transition: opacity 0.15s;
+}
+
+.feedback__submit:hover {
+  opacity: 0.9;
+}

@@ -1,0 +1,81 @@
+.clarification {
+  margin: 20px 0;
+}
+
+.clarification__card {
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.clarification__icon {
+  font-size: 20px;
+}
+
+.clarification__title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 8px 0 12px;
+}
+
+.clarification__text {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.clarification__input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-primary);
+  resize: vertical;
+  font-family: inherit;
+}
+
+.clarification__input::placeholder {
+  color: var(--text-muted);
+}
+
+.clarification__input:focus {
+  outline: none;
+  border-color: var(--text-secondary);
+}
+
+.clarification__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.clarification__btn {
+  padding: 8px 24px;
+  font-size: 14px;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: background 0.15s;
+}
+
+.clarification__btn--skip {
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+}
+
+.clarification__btn--skip:hover {
+  background: var(--bg-secondary);
+}
+
+.clarification__btn--submit {
+  background: var(--text-primary);
+  color: white;
+}
+
+.clarification__btn--submit:hover {
+  opacity: 0.9;
+}
