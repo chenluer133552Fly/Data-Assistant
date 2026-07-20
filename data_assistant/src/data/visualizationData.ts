@@ -1,0 +1,125 @@
+import type { ChartDefinition, ReasoningMetric } from "../types/domain";
+
+export const chartDefinitions: ChartDefinition[] = [
+  {
+    id: "customer-acquisition",
+    title: "Customers acquired by acquisition date",
+    description:
+      "New customer volume by reporting period. January and April recorded the strongest acquisition activity.",
+    mark: "bar",
+    yTitle: "Customers (thousands)",
+    values: [
+      { category: "Jan", value: 2 },
+      { category: "Feb", value: 1 },
+      { category: "Mar", value: 1.5 },
+      { category: "Apr", value: 2 },
+      { category: "May", value: 0.75 },
+      { category: "Jun", value: 1.75 },
+    ],
+  },
+  {
+    id: "regional-revenue",
+    title: "Regional revenue trend",
+    description:
+      "Revenue index by month. The strongest recovery occurred in May after a softer first-quarter close.",
+    mark: "area",
+    yTitle: "Revenue index",
+    values: [
+      { category: "Jan", value: 15 },
+      { category: "Feb", value: 82 },
+      { category: "Mar", value: 47 },
+      { category: "Apr", value: 30 },
+      { category: "May", value: 96 },
+      { category: "Jun", value: 74 },
+    ],
+  },
+  {
+    id: "channel-comparison",
+    title: "Acquisition channel comparison",
+    description:
+      "Customer acquisition is split between branch and digital channels. Digital contribution increased in Q3 and Q4.",
+    mark: "bar",
+    yTitle: "Customers",
+    values: [
+      { category: "Q1", series: "Branch", value: 86 },
+      { category: "Q1", series: "Digital", value: 200 },
+      { category: "Q2", series: "Branch", value: 31 },
+      { category: "Q2", series: "Digital", value: 12 },
+      { category: "Q3", series: "Branch", value: 149 },
+      { category: "Q3", series: "Digital", value: 116 },
+      { category: "Q4", series: "Branch", value: 24 },
+      { category: "Q4", series: "Digital", value: 151 },
+    ],
+  },
+  {
+    id: "segment-balance",
+    title: "Balance by customer segment",
+    description:
+      "Average balance movement for Premier and Private Banking customers across the latest three periods.",
+    mark: "line",
+    yTitle: "Average balance (CNY thousands)",
+    values: [
+      { category: "Apr", series: "Premier", value: 650 },
+      { category: "May", series: "Premier", value: 180 },
+      { category: "Jun", series: "Premier", value: 820 },
+      { category: "Jul", series: "Premier", value: 735 },
+      { category: "Apr", series: "Private Banking", value: 42 },
+      { category: "May", series: "Private Banking", value: 190 },
+      { category: "Jun", series: "Private Banking", value: 260 },
+      { category: "Jul", series: "Private Banking", value: 205 },
+    ],
+  },
+];
+
+export const reasoningMetrics: ReasoningMetric[] = [
+  {
+    id: "total-nii",
+    title: "Total NII",
+    value: "8 month-on-month",
+    positiveChange: "5.2%",
+    negativeChange: "3.4%",
+    column: 0,
+    row: 1,
+    tone: "root",
+  },
+  {
+    id: "saving-nii-1",
+    title: "Saving NII",
+    value: "888,888,888,888,888.80",
+    positiveChange: "5.2%",
+    negativeChange: "3.4%",
+    column: 1,
+    row: 0,
+    tone: "saving",
+  },
+  {
+    id: "saving-nii-2",
+    title: "Saving NII",
+    value: "888,888,888,888,888.80",
+    positiveChange: "5.2%",
+    negativeChange: "3.4%",
+    column: 1,
+    row: 2,
+    tone: "saving",
+  },
+  ...Array.from({ length: 3 }, (_, index) => ({
+    id: `usd-nii-${index + 1}`,
+    title: "USD Saving NII",
+    value: "888,888,888,888,888.80",
+    positiveChange: "5.2%",
+    negativeChange: "3.4%",
+    column: 2,
+    row: index,
+    tone: "usd" as const,
+  })),
+  ...Array.from({ length: 4 }, (_, index) => ({
+    id: `detail-nii-${index + 1}`,
+    title: index === 0 ? "Long-term Saving NII" : "USD Saving NII",
+    value: "888,888,888,888,888.80",
+    positiveChange: "5.2%",
+    negativeChange: "3.4%",
+    column: 3,
+    row: index,
+    tone: "detail" as const,
+  })),
+];
