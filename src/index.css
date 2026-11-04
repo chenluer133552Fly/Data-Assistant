@@ -1,65 +1,75 @@
-@import "tailwindcss";
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+/* Keep utilities unlayered so module styles retain precedence over Ant Design. */
+@import "tailwindcss/utilities.css";
+
+/* Match the existing inclusive breakpoints, from widest to narrowest. */
+@custom-variant wide (@media (min-width: 1600px));
+@custom-variant compact (@media (max-width: 1250px));
+@custom-variant tablet (@media (max-width: 1000px));
+@custom-variant mobile (@media (max-width: 760px));
 
 :root {
-  font-family: "Segoe UI", Arial, sans-serif;
-  color: #344743;
-  background: #f7f8fb;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  --teal: #086451;
-  --teal-dark: #075441;
-  --rose: #e3154d;
-  --muted: #858a96;
-  --border: #e8eaf0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: #344743;
+    background: #f7f8fb;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    --teal: #086451;
+    --teal-dark: #075441;
+    --rose: #e3154d;
+    --muted: #858a96;
+    --border: #e8eaf0;
 }
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 body {
-  margin: 0;
-  min-width: 360px;
+    margin: 0;
+    min-width: 360px;
 }
 button,
 input,
 textarea,
 select {
-  font: inherit;
+    font: inherit;
 }
 button,
 a {
-  -webkit-tap-highlight-color: transparent;
+    -webkit-tap-highlight-color: transparent;
 }
 button {
-  cursor: pointer;
+    cursor: pointer;
 }
 button:disabled {
-  cursor: not-allowed;
+    cursor: not-allowed;
 }
 a {
-  color: inherit;
+    color: inherit;
 }
 h1,
 h2,
 h3,
 p {
-  margin: 0;
+    margin: 0;
 }
 :focus-visible {
-  outline: 2px solid #00896b;
-  outline-offset: 3px;
+    outline: 2px solid #00896b;
+    outline-offset: 3px;
 }
 ::selection {
-  background: #c8ece0;
-  color: #075441;
+    background: #c8ece0;
+    color: #075441;
 }
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    /* Position measurements must be immediate for Ant Design popup alignment. */
-    transition: none !important;
-    scroll-behavior: auto !important;
-  }
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        /* Position measurements must be immediate for Ant Design popup alignment. */
+        transition: none !important;
+        scroll-behavior: auto !important;
+    }
 }

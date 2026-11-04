@@ -1,0 +1,5 @@
+node_modules
+dist
+AGENTS.md
+*.svg
+.tmp-style-migration

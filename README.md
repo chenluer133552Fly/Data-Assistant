@@ -16,11 +16,15 @@ npm run build   # 类型检查与生产构建
 npm run lint    # 代码规范检查
 npm run test    # Mock 业务流程、查询与页面渲染检查
 npm run test:browser # 开发服务启动后，验证下拉框、抽屉和生成流程
+npm run format # 使用 4 个空格缩进格式化项目文件
+npm run format:check # 检查格式是否统一
 ```
 
 浏览器回归检查默认使用 Windows 中已安装的 Edge，以独立临时配置运行无界面测试；可用 `BROWSER_PATH` 指定 Chromium 浏览器路径，用 `APP_URL` 指定开发服务地址。检查同时覆盖系统开启和关闭“减少动态效果”时的下拉面板显示。
 
 ## 页面与体验流程
+
+模块样式在对应 TSX 组件中使用 Tailwind CSS utility classes；`src/index.css` 仅维护全局基础样式、主题变量及原有响应式断点。`.editorconfig` 与 Prettier 统一使用 4 个空格缩进。
 
 | 路径             | 页面                                                                  |
 | ---------------- | --------------------------------------------------------------------- |

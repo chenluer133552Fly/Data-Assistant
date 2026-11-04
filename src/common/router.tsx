@@ -13,26 +13,32 @@ const ServerError = lazy(() => import("./layout/server-error"));
 const Forbidden = lazy(() => import("./layout/forbidden"));
 
 export default function AppRoutes() {
-  return (
-    <Suspense
-      fallback={
-        <div className="route-loading">
-          <Spin size="large" />
-        </div>
-      }
-    >
-      <Routes>
-        <Route path="/" element={<Navigate to="/intelligence" replace />} />
-        <Route path="/intelligence" element={<IntelligencePage />} />
-        <Route path="/leads" element={<LeadsPage />} />
-        <Route path="/leads/:id" element={<LeadsDetailPage />} />
-        <Route path="/community" element={<CommunityPage />} />
-        <Route path="/community/:id" element={<CommunityDetailPage />} />
-        <Route path="/validation" element={<ValidationPage />} />
-        <Route path="/error" element={<ServerError />} />
-        <Route path="/forbidden" element={<Forbidden />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </Suspense>
-  );
+    return (
+        <Suspense
+            fallback={
+                <div className="route-loading min-h-[45vh] grid place-items-center">
+                    <Spin size="large" />
+                </div>
+            }
+        >
+            <Routes>
+                <Route
+                    path="/"
+                    element={<Navigate to="/intelligence" replace />}
+                />
+                <Route path="/intelligence" element={<IntelligencePage />} />
+                <Route path="/leads" element={<LeadsPage />} />
+                <Route path="/leads/:id" element={<LeadsDetailPage />} />
+                <Route path="/community" element={<CommunityPage />} />
+                <Route
+                    path="/community/:id"
+                    element={<CommunityDetailPage />}
+                />
+                <Route path="/validation" element={<ValidationPage />} />
+                <Route path="/error" element={<ServerError />} />
+                <Route path="/forbidden" element={<Forbidden />} />
+                <Route path="*" element={<NotFound />} />
+            </Routes>
+        </Suspense>
+    );
 }
