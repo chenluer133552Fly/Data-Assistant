@@ -59,7 +59,7 @@
 明确要求：
 
 - 顶部绿色 AI Ideation Engine 卡片默认展开，展示 Focus Product、Constraints 等内容。
-- Focus Product 默认不选中；Constraints 默认无选中值，下拉选项为空。
+- Focus Product 默认不选中；Constraints 为直接打开抽屉的入口，未选择产品时禁用。
 - 未完成生成条件选择时，Generate Ideas 按钮禁用。
 - 选项、枚举及下方构想列表当前允许使用 Mock 数据；后续由真实接口获取。
 - 首次进入时即可展示 Mock 构想列表，无需先选择生成条件。
@@ -73,19 +73,18 @@
 
 ![Leads Ideation 首页列表](image-2.png)
 
-### 3.2 Focus Product 与 Constraints 联动
+### 3.2 Focus Product 与 Constraints 抽屉入口
 
-- 先选择 Focus Product，再选择 Constraints。
-- Focus Product 未选择时，Constraints 下拉选项为空；选择产品后，提供该产品对应的 Constraints 下拉选项。
-- 当 Focus Product 与 Constraints 均有选中值时，展示右侧信号选择抽屉。
-- 切换 Focus Product 后，清空 Constraints 选中值、已选信号、偏好及补充信息，包括未提交草稿和已保存条件。
-- 产品切换后，根据新产品重新提供 Constraints 选项；Generate Ideas 恢复禁用，直到重新完成有效条件选择。
+- 先选择 Focus Product，再点击 Constraints 框，直接展示右侧信号选择抽屉。
+- Constraints 不再使用下拉菜单或与产品关联的枚举，不需要先选条件入口。
+- Focus Product 未选择时，Constraints 入口禁用；选择产品后即可点击。
+- 切换 Focus Product 后，清空已选信号、偏好及补充信息，包括未提交草稿和已保存条件。
+- 产品切换后，Generate Ideas 恢复禁用，直到重新完成有效条件选择。
 
 **Constraints 当前暂定规则：**
 
-- 下拉选项先使用与产品关联的 Mock 条件入口，例如 `Custom selection`；不预设真实后端枚举和预设条件业务。
-- 下拉选中的值表示本次使用的条件入口，选择后打开抽屉；已有保存条件时，可通过该入口重新打开并回显。
-- 抽屉负责选择具体信号、阶段、渠道及补充信息；Complete Selection 提交后的数量作为独立摘要展示，不作为下拉枚举项数量。
+- Constraints 框点击后直接打开抽屉；已有保存条件时，再次点击该框重新打开并回显。
+- 抽屉负责选择具体信号、阶段、渠道及补充信息；Complete Selection 提交后的数量作为独立摘要展示。
 - 数量摘要暂按“信号数量 + CLCM Stage 勾选数量 + Channels 勾选数量”计算，补充文字不计数。此数量可以超过 5，但其中信号始终最多 5 项。
 
 ### 3.3 Constraints 抽屉：第一步，选择信号
@@ -133,9 +132,9 @@
 
 - 点击 Complete Selection 后，保存信号及可选偏好、补充信息，并在顶部绿色区域展示已提交条件摘要。
 - 摘要包含信号数量、CLCM Stage 和 Channels；可选字段为空时暂不展示对应摘要标签。
-- Focus Product、Constraints 均有值，且已通过 Complete Selection 保存 1–5 项信号后，Generate Ideas 才可用。
+- Focus Product 已选择，且已通过 Complete Selection 保存 1–5 项信号后，Generate Ideas 才可用。
 - Complete Selection 只保存条件；随后点击 Generate Ideas 才开始生成。
-- Constraints 旁展示已保存条件的数量摘要，计算口径见第 3.2 节；下拉入口名称与数量摘要分开展示。
+- Constraints 旁展示已保存条件的数量摘要，计算口径见第 3.2 节；抽屉入口与数量摘要分开展示。
 
 **抽屉草稿与已保存条件：**
 
@@ -352,7 +351,7 @@
 | 能力 | 已知要求 | 尚需补充 |
 | --- | --- | --- |
 | 信号与 CIO 洞察查询 | 当前用 Mock 展示两个 Tab 的列表、筛选、排序与分页；不增加卡片跳转 | 正式数据来源、枚举、时间字段、同步时间及与 Market Signals 的关系 |
-| 产品与条件配置 | 先选产品再选 Constraints；保存条件后回显；切换产品清空条件；当前可 Mock | 正式选项来源、字段结构、保存是否需要独立接口 |
+| 产品与条件配置 | 先选产品，再点击 Constraints 框直接打开抽屉，无下拉枚举联动；保存条件后回显；切换产品清空条件；当前可 Mock | 正式产品来源、字段结构、保存是否需要独立接口 |
 | 构想列表与详情查询 | 列表默认每页 10 条，回车搜索、筛选重置页码；详情按模块独立实现 | 字段结构、查询参数、正式枚举、时间字段与权限 |
 | 生成构想与任务进度 | 顶部 Skeleton 占位，成功追加新结果，失败移除占位并保留旧列表，重试重置 TASKS | 提交参数、流式协议、并发规则、任务结束及离页行为 |
 | 发布构想 | 成功后关闭弹窗；不再提醒偏好按账号存本浏览器；重复发布错误提示已发布 | 重复发布错误码、其他失败细节、是否改为后端保存提醒偏好 |

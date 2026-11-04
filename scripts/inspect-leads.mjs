@@ -145,6 +145,10 @@ try {
       "!!document.querySelector('#focus-product') && !!document.querySelector('.idea-card')",
       "Leads page"
     );
+    assert.equal(
+      await evaluate("document.querySelector('#constraints').disabled"),
+      true
+    );
     await click("document.querySelector('#focus-product')");
     await waitFor(
       `${visibleOptions}.length===4`,
@@ -152,11 +156,6 @@ try {
     );
     await click(`${visibleOptions}[0]`);
     await click("document.querySelector('#constraints')");
-    await waitFor(
-      `${visibleOptions}.length===3`,
-      "three visible constraint options"
-    );
-    await click(`${visibleOptions}[0]`);
     await waitFor(
       "!!document.querySelector('.constraints-drawer .signal-card')",
       "signal drawer"
@@ -171,6 +170,18 @@ try {
     await waitFor(
       "!document.querySelector('.generate-button').disabled",
       "enabled Generate Ideas"
+    );
+    await click("document.querySelector('#constraints')");
+    await waitFor(
+      "!!document.querySelector('.constraints-drawer .signal-card.selected')",
+      "saved signal restored on direct reopen"
+    );
+    await click(
+      "document.querySelector('.constraints-drawer .ant-drawer-close')"
+    );
+    await waitFor(
+      "!document.querySelector('.constraints-drawer')",
+      "closed constraints drawer"
     );
     const before = await evaluate(
       "JSON.parse(localStorage.getItem('meridian:database:v1') || 'null')?.leads.length || 12"
@@ -194,7 +205,7 @@ try {
     );
     assert.deepEqual(pageErrors, [], "No page runtime errors");
     console.log(
-      `PASS (${motion}): 4 products → 3 constraints → drawer → save 1 signal → generate 3 ideas`
+      `PASS (${motion}): 4 products → direct constraints drawer → save and reopen 1 signal → generate 3 ideas`
     );
   }
 } finally {

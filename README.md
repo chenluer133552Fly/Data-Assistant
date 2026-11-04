@@ -31,7 +31,7 @@ npm run test:browser # 开发服务启动后，验证下拉框、抽屉和生成
 | `/community/:id` | Community 独立详情页与复制                                            |
 | `/validation`    | Validation：副本列表、搜索与筛选                                      |
 
-在 Leads Ideation 选择 Focus Product（FX、Mortgage、Wealth Management 或 Credit Cards），Constraints 会提供该产品对应的三个 Mock 入口，例如 FX customer engagement、Currency market opportunities、Custom selection。选择任意入口即可打开抽屉；这些入口不预选信号或偏好。Customer Signals 与 Market Signals 跨 Tab、跨页共选 1–5 项，进入第二步后可直接点击 Complete Selection 保存。第二步的阶段、渠道和补充文字均可留空。关闭抽屉后也可点击 Constraints 旁的编辑按钮重新打开。
+在 Leads Ideation 选择 Focus Product（FX、Mortgage、Wealth Management 或 Credit Cards），点击 Constraints 框即可直接打开抽屉，无需展开下拉菜单。未选择产品时，该入口禁用。Customer Signals 与 Market Signals 跨 Tab、跨页共选 1–5 项，进入第二步后可直接点击 Complete Selection 保存。第二步的阶段、渠道和补充文字均可留空。保存后再次点击 Constraints 框，可查看已保存条件。
 
 Complete Selection 只保存条件；点击 Generate Ideas 才生成构想。生成时 TASKS 展示模拟流式进度，列表顶部出现占位，原列表保留，完成后追加新结果。生成期间禁用重复生成；TASKS 完成后保留，可手动收起或关闭。切换模块不会取消当前生成，刷新浏览器则不会恢复进行中的任务。
 

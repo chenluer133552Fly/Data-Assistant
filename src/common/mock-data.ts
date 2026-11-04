@@ -16,32 +16,6 @@ export const FOCUS_PRODUCT_OPTIONS: { value: Product; label: string }[] = [
   { value: "Cards", label: "Credit Cards" },
 ];
 
-// Mock entry points only. Signals and preferences are selected in the drawer.
-export const CONSTRAINT_OPTIONS: Record<
-  Product,
-  { value: string; label: string }[]
-> = {
-  FX: [
-    { value: "fx-engagement", label: "FX customer engagement" },
-    { value: "fx-market", label: "Currency market opportunities" },
-    { value: "fx-custom", label: "Custom selection" },
-  ],
-  Mortgage: [
-    { value: "mortgage-buyers", label: "Home buyer opportunities" },
-    { value: "mortgage-renewal", label: "Mortgage renewal engagement" },
-    { value: "mortgage-custom", label: "Custom selection" },
-  ],
-  Wealth: [
-    { value: "wealth-review", label: "Portfolio review opportunities" },
-    { value: "wealth-engagement", label: "Wealth customer engagement" },
-    { value: "wealth-custom", label: "Custom selection" },
-  ],
-  Cards: [
-    { value: "cards-activation", label: "New cardholder activation" },
-    { value: "cards-travel", label: "Travel and rewards engagement" },
-    { value: "cards-custom", label: "Custom selection" },
-  ],
-};
 export const STAGES = [
   "Acquisition",
   "Onboarding",

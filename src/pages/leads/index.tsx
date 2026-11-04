@@ -7,11 +7,7 @@ import {
   UpOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-import {
-  CONSTRAINT_OPTIONS,
-  emptySelection,
-  FOCUS_PRODUCT_OPTIONS,
-} from "../../common/mock-data";
+import { emptySelection, FOCUS_PRODUCT_OPTIONS } from "../../common/mock-data";
 import type { Product, Selection } from "../../common/types";
 import { useWorkspace } from "../../common/use-workspace";
 import { IdeaFilters } from "../../components/idea-filters";
@@ -30,7 +26,6 @@ export default function LeadsPage() {
     useWorkspace();
   const navigate = useNavigate();
   const [product, setProduct] = useState<Product>();
-  const [constraint, setConstraint] = useState<string>();
   const [selection, setSelection] = useState<Selection | null>(null);
   const [open, setOpen] = useState(false);
   const [session, setSession] = useState(0);
@@ -47,12 +42,12 @@ export default function LeadsPage() {
       selection.channels.length
     : 0;
   function editSelection() {
+    if (!product) return;
     setSession((value) => value + 1);
     setOpen(true);
   }
   function changeProduct(value: Product | undefined) {
     setProduct(value);
-    setConstraint(undefined);
     setSelection(null);
     setOpen(false);
   }
@@ -71,9 +66,7 @@ export default function LeadsPage() {
     <Button
       className="generate-button"
       icon={<ThunderboltOutlined />}
-      disabled={
-        !product || !constraint || !selection?.signalIds.length || generating
-      }
+      disabled={!product || !selection?.signalIds.length || generating}
       loading={generating}
       onClick={() => {
         if (product && selection) {
@@ -136,40 +129,24 @@ export default function LeadsPage() {
                 <label htmlFor="constraints">
                   Constraints {selection && <small>{count} selected</small>}
                 </label>
-                <div className="constraint-control">
-                  <Select
-                    id="constraints"
-                    aria-label="Constraints"
-                    placeholder={
-                      product ? "Select constraints" : "Select a product first"
-                    }
-                    value={constraint}
-                    options={product ? CONSTRAINT_OPTIONS[product] : []}
-                    popupMatchSelectWidth={false}
-                    notFoundContent="Select a Focus Product first"
-                    onSelect={(value) => {
-                      setConstraint(value);
-                      editSelection();
-                    }}
-                  />
-                  {constraint && (
-                    <Button
-                      aria-label={
-                        selection
-                          ? "Review saved constraints"
-                          : "Select signals"
-                      }
-                      title={
-                        selection
-                          ? "Review saved constraints"
-                          : "Select signals"
-                      }
-                      type="text"
-                      icon={<EditOutlined />}
-                      onClick={editSelection}
-                    />
-                  )}
-                </div>
+                <Button
+                  id="constraints"
+                  className="constraint-trigger"
+                  aria-label="Constraints"
+                  aria-haspopup="dialog"
+                  aria-expanded={open}
+                  disabled={!product}
+                  onClick={editSelection}
+                >
+                  <span>
+                    {!product
+                      ? "Select a product first"
+                      : selection
+                      ? "Review selected constraints"
+                      : "Select constraints"}
+                  </span>
+                  <EditOutlined />
+                </Button>
               </div>
               <div className="engine-generate">{generateButton}</div>
             </div>

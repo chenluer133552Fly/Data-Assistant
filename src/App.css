@@ -441,13 +441,25 @@
 .engine-field .ant-select-clear {
   color: #94baaa;
 }
-.constraint-control {
+.engine-field .constraint-trigger {
   display: flex;
   align-items: center;
-  gap: 5px;
-}
-.constraint-control .ant-btn {
+  justify-content: space-between;
+  width: 100%;
+  background: #075443;
+  border-color: transparent;
   color: #d6e9e2;
+  text-align: left;
+}
+.engine-field .constraint-trigger:not(:disabled):hover {
+  background: #075443;
+  border-color: #94baaa;
+  color: #d6e9e2;
+}
+.engine-field .constraint-trigger:disabled {
+  background: #075443;
+  border-color: transparent;
+  color: #94baaa;
 }
 .engine-generate {
   margin-left: auto;
