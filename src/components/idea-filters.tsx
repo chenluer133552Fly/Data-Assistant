@@ -21,8 +21,12 @@ export function IdeaFilters({
         onChange({ ...query, [key]: value, page: 1 });
     }
     return (
-        <div className="filter-bar flex items-center justify-between gap-[12px] m-[19px_0_16px] [&_.ant-select]:text-[11px] [&_.ant-select]:h-[31px] [&_.ant-input-affix-wrapper]:text-[11px] [&_.ant-input-affix-wrapper]:min-h-[31px] [&_.idea-search]:w-[280px] [&_.idea-search]:flex-[0_1_280px] [&_.idea-search]:bg-transparent compact:flex-wrap compact:[&_.idea-search]:ml-auto compact:[&_.idea-search]:basis-[310px] mobile:[&_.idea-search]:w-full mobile:[&_.idea-search]:basis-[100%]">
-            <div className="filter-controls flex items-center flex-wrap gap-[7px] min-w-0 [&_.ant-select]:min-w-[95px] [&_.sort-select]:min-w-[152px] [&_.ant-checkbox-wrapper]:text-[11px] [&_.ant-checkbox-wrapper]:whitespace-nowrap [&_.ant-checkbox-wrapper]:ml-[5px] [&_.ant-checkbox-wrapper]:text-[#777f87] mobile:gap-[6px] mobile:[&_.ant-select]:flex-1">
+        <div
+            className={`filter-bar flex items-center justify-between [&_.ant-select]:text-[11px] [&_.ant-select]:h-[31px] [&_.ant-input-affix-wrapper]:min-h-[31px] [&_.idea-search]:w-[280px] [&_.idea-search]:flex-[0_1_280px] [&_.idea-search]:bg-transparent compact:flex-wrap compact:[&_.idea-search]:ml-auto compact:[&_.idea-search]:basis-[310px] mobile:[&_.idea-search]:w-full mobile:[&_.idea-search]:basis-[100%] ${module === "leads" ? "gap-[8px] my-[16px] [&_.ant-input-affix-wrapper]:text-[14px] [&_.ant-input::placeholder]:text-[#94A3B8] [&_.ant-input::placeholder]:font-normal [&_.ant-input::placeholder]:leading-normal" : "gap-[12px] m-[19px_0_16px] [&_.ant-input-affix-wrapper]:text-[11px]"}`}
+        >
+            <div
+                className={`filter-controls flex items-center flex-wrap min-w-0 [&_.ant-select]:min-w-[95px] [&_.sort-select]:min-w-[152px] [&_.ant-checkbox-wrapper]:text-[11px] [&_.ant-checkbox-wrapper]:whitespace-nowrap [&_.ant-checkbox-wrapper]:ml-[5px] [&_.ant-checkbox-wrapper]:text-[#777f87] mobile:[&_.ant-select]:flex-1 ${module === "leads" ? "gap-[8px]" : "gap-[7px] mobile:gap-[6px]"}`}
+            >
                 <Select
                     aria-label="Sort ideas"
                     value={query.sort}
@@ -92,7 +96,11 @@ export function IdeaFilters({
                 className="idea-search [&_.ant-input-prefix]:text-[#a0a7b4] [&_.ant-input-prefix]:mr-[7px]"
                 aria-label="Search ideas"
                 prefix={<SearchOutlined />}
-                placeholder="Search by title, keyword, product or segment…"
+                placeholder={
+                    module === "leads"
+                        ? "title,keyword,product or segment..."
+                        : "Search by title, keyword, product or segment…"
+                }
                 defaultValue={query.search}
                 allowClear
                 onPressEnter={(event) =>

@@ -43,7 +43,7 @@ function Shell() {
                         onClick={() => setMobileMenu(!mobileMenu)}
                     />
                     <span
-                        className="brand-mark w-[22px] h-[22px] rounded-full grid place-items-center font-[Georgia,_serif] text-white font-bold text-[16px] bg-[#ed405b] [border:2px_solid_#f88c9d] leading-[1]"
+                        className="brand-mark w-[22px] h-[22px] rounded-full grid place-items-center text-white font-bold text-[16px] bg-[#ed405b] [border:2px_solid_#f88c9d] leading-[1]"
                         aria-hidden="true"
                     >
                         M
@@ -88,8 +88,8 @@ function Shell() {
                     ))}
                 </nav>
             </aside>
-            <main className="app-content ml-[224px] p-[76px_44px_36px] min-h-screen wide:pt-[84px] compact:ml-[205px] compact:px-[30px] tablet:px-[22px] mobile:ml-[0] mobile:p-[72px_17px_25px]">
-                <div className="content-inner max-w-[1220px] m-[0_auto]">
+            <main className="app-content ml-[224px] min-h-screen pt-[66px] pb-[28px] px-[clamp(17px,2.6%,44px)] compact:ml-[205px] mobile:ml-0 mobile:pt-[72px] mobile:pb-[28px] mobile:px-[17px]">
+                <div className="content-inner w-full max-w-[1224px] min-w-0 mx-auto">
                     <AppRoutes />
                 </div>
             </main>
@@ -109,7 +109,7 @@ export default function App() {
                     colorText: "#344743",
                     colorTextSecondary: "#7e858c",
                     colorBorder: "#e4e7eb",
-                    fontFamily: '"Segoe UI", Arial, sans-serif',
+                    fontFamily: '"Inter Variable", Inter, sans-serif',
                     fontSize: 13,
                     borderRadius: 6,
                     controlHeight: 34,

@@ -27,10 +27,11 @@ export default function IntelligencePage() {
     return (
         <>
             <PageHeading
-                title="Intelligence Radar"
+                specified
+                title="Intelligence Rader"
                 description="Customer signals, CIO insights from the Chief Investment Office, omni-channel behaviors."
                 extra={
-                    <span className="sync-label text-[#91979c] text-[11px] whitespace-nowrap [&_b]:text-[#649485] [&_b]:font-medium [&_.anticon]:mr-[3px] compact:whitespace-normal compact:max-w-[150px] compact:text-right mobile:max-w-none mobile:text-[10px]">
+                    <span className="sync-label text-[#5C706B] text-[14px] font-normal leading-normal whitespace-nowrap [&_b]:text-[#036652] [&_b]:font-normal [&_.anticon]:mr-[3px] compact:whitespace-normal compact:max-w-[180px] compact:text-right mobile:max-w-none mobile:text-left">
                         <ClockCircleOutlined /> Last synced:{" "}
                         <b>Oct 30, 2026 · 08:17 HKT</b>
                     </span>
@@ -38,7 +39,7 @@ export default function IntelligencePage() {
             />
             <Tabs
                 activeKey={tab}
-                className="radar-tabs [&_.ant-tabs-nav]:mb-[0] [&_.ant-tabs-nav::before]:[border:0] [&_.ant-tabs-tab]:pt-[0] [&_.ant-tabs-tab]:text-[12px]"
+                className="radar-tabs [&_.ant-tabs-nav]:mb-0 [&_.ant-tabs-nav::before]:border-0 [&_.ant-tabs-tab]:pt-0 [&_.ant-tabs-tab]:text-[14px] [&_.ant-tabs-tab]:font-normal [&_.ant-tabs-tab-btn]:text-[#5C706B] [&_.ant-tabs-tab-btn]:flex [&_.ant-tabs-tab-btn]:items-center [&_.ant-tabs-tab-active_.ant-tabs-tab-btn]:text-[#036652] [&_.ant-tabs-tab-active_.ant-tabs-tab-btn]:[text-shadow:none] [&_.ant-tabs-tab-active_.tab-count]:text-[#036652]"
                 onChange={(key) => {
                     setTab(key);
                     setCategory(undefined);
@@ -50,7 +51,7 @@ export default function IntelligencePage() {
                         label: (
                             <>
                                 Customer Signals{" "}
-                                <span className="tab-count text-[10px] text-[#899e97] ml-[7px] bg-[#eff4f1] rounded-[3px] p-[0_4px]">
+                                <span className="tab-count flex items-center justify-center px-[8px] ml-[7px] text-[12px] text-[#5C706B] bg-[#F1F5F9] rounded-full font-normal [font-variant-numeric:lining-nums_tabular-nums]">
                                     {customerSignals.length}
                                 </span>
                             </>
@@ -61,7 +62,7 @@ export default function IntelligencePage() {
                         label: (
                             <>
                                 CIO Insights{" "}
-                                <span className="tab-count text-[10px] text-[#899e97] ml-[7px] bg-[#eff4f1] rounded-[3px] p-[0_4px]">
+                                <span className="tab-count flex items-center justify-center px-[8px] ml-[7px] text-[12px] text-[#5C706B] bg-[#F1F5F9] rounded-full font-normal [font-variant-numeric:lining-nums_tabular-nums]">
                                     {cioSignals.length}
                                 </span>
                             </>
@@ -69,7 +70,7 @@ export default function IntelligencePage() {
                     },
                 ]}
             />
-            <div className="filter-bar flex items-center justify-between gap-[12px] m-[19px_0_16px] [&_.ant-select]:text-[11px] [&_.ant-select]:h-[31px] [&_.ant-input-affix-wrapper]:text-[11px] [&_.ant-input-affix-wrapper]:min-h-[31px] [&_.idea-search]:w-[280px] [&_.idea-search]:flex-[0_1_280px] [&_.idea-search]:bg-transparent compact:flex-wrap compact:[&_.idea-search]:ml-auto compact:[&_.idea-search]:basis-[310px] mobile:[&_.idea-search]:w-full mobile:[&_.idea-search]:basis-[100%] radar-filters [&.radar-filters]:justify-start [&.radar-filters]:m-[12px_0_20px] [&.radar-filters]:gap-[12px] [&_.ant-select]:min-w-[170px] mobile:[&.radar-filters]:flex-wrap mobile:[&.radar-filters]:gap-[7px] mobile:[&_.ant-select]:min-w-[140px] mobile:[&_.ant-select]:flex-1">
+            <div className="filter-bar radar-filters flex items-center flex-wrap gap-[12px] mt-[16px] mb-[24px] [&_.ant-select]:text-[11px] [&_.ant-select]:h-[31px] [&_.ant-select]:min-w-[170px] mobile:[&_.ant-select]:min-w-[140px] mobile:[&_.ant-select]:flex-1">
                 <Select
                     aria-label="Filter signals by product"
                     allowClear
@@ -108,12 +109,16 @@ export default function IntelligencePage() {
                     }}
                 />
             </div>
-            <div className="signal-list flex flex-col gap-[12px]">
+            <div className="signal-list flex flex-col gap-[16px]">
                 {list.length ? (
                     list
                         .slice((page - 1) * 10, page * 10)
                         .map((signal) => (
-                            <SignalCard key={signal.id} signal={signal} />
+                            <SignalCard
+                                key={signal.id}
+                                signal={signal}
+                                appearance="radar"
+                            />
                         ))
                 ) : (
                     <div className="empty-state p-[55px_20px] bg-white [border:1px_solid_var(--border)] rounded-[9px]">

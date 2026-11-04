@@ -11,7 +11,8 @@
 @custom-variant mobile (@media (max-width: 760px));
 
 :root {
-    font-family: "Segoe UI", Arial, sans-serif;
+    font-family: "Inter Variable", Inter, sans-serif;
+    font-style: normal;
     color: #344743;
     background: #f7f8fb;
     font-synthesis: none;

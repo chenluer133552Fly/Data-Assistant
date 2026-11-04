@@ -18,13 +18,17 @@ export function PageHeading({
     title,
     description,
     extra,
+    specified = false,
 }: {
     title: string;
     description: string;
     extra?: ReactNode;
+    specified?: boolean;
 }) {
     return (
-        <div className="page-heading flex justify-between items-center gap-[24px] mb-[24px] [&_h1]:font-['Trebuchet_MS','Segoe_UI',sans-serif] [&_h1]:text-[24px] [&_h1]:leading-[1.25] [&_h1]:font-bold [&_h1]:text-[#263e37] [&_h1]:tracking-[-0.4px] [&_p]:text-[#818698] [&_p]:text-[13px] [&_p]:mt-[5px] [&_p]:leading-[1.6] tablet:items-start mobile:flex-wrap mobile:gap-[10px] mobile:mb-[20px] mobile:[&_h1]:text-[22px] mobile:[&_p]:text-[12px]">
+        <div
+            className={`page-heading flex justify-between items-center gap-[24px] [&_h1]:leading-[1.25] [&_p]:mt-[5px] [&_p]:leading-[1.6] tablet:items-start mobile:flex-wrap mobile:gap-[10px] ${specified ? "mb-[16px] [&_h1]:text-[20px] [&_h1]:font-semibold [&_h1]:text-[#153233] [&_p]:text-[#64748B] [&_p]:text-[14px] [&_p]:font-medium" : "mb-[24px] [&_h1]:text-[24px] [&_h1]:font-bold [&_h1]:text-[#263e37] [&_h1]:tracking-[-0.4px] [&_p]:text-[#818698] [&_p]:text-[13px] mobile:mb-[20px] mobile:[&_h1]:text-[22px] mobile:[&_p]:text-[12px]"}`}
+        >
             <div>
                 <h1>{title}</h1>
                 <p>{description}</p>
@@ -130,20 +134,25 @@ export function ListState({
 
 export function SignalCard({
     signal,
+    appearance,
     selected,
     limited,
     selectable,
     onSelect,
 }: {
     signal: Signal;
+    appearance?: "radar";
     selected?: boolean;
     limited?: boolean;
     selectable?: boolean;
     onSelect?: () => void;
 }) {
+    const radar = appearance === "radar";
     const content = (
         <>
-            <div className="signal-top flex items-center gap-[20px] justify-between mb-[8px]">
+            <div
+                className={`signal-top flex w-full items-center gap-[20px] justify-between ${radar ? "mb-[10px]" : "mb-[8px]"}`}
+            >
                 <div className="tag-row flex items-center gap-[7px] flex-wrap">
                     {selectable && (
                         <span
@@ -154,14 +163,14 @@ export function SignalCard({
                         </span>
                     )}
                     <span
-                        className={`signal-category rounded-[3px] text-[10px] leading-[1.7] p-[0_6px] whitespace-nowrap text-[#a658b4] bg-[#f9effc] [&.category-conversion]:text-[#c39d21] [&.category-conversion]:bg-[#fff9e8] [&.category-transactional]:text-[#737cdb] [&.category-transactional]:bg-[#f0f0ff] [&.category-momentum]:text-[#439b81] [&.category-momentum]:bg-[#edf9f4] [&.category-lifecycle]:text-[#439b81] [&.category-lifecycle]:bg-[#edf9f4] [&.category-macro]:text-[#697bc1] [&.category-macro]:bg-[#f0f2fd] [&.category-rates]:text-[#697bc1] [&.category-rates]:bg-[#f0f2fd] [&.category-market-outlook]:text-[#697bc1] [&.category-market-outlook]:bg-[#f0f2fd] [&.category-investment]:text-[#697bc1] [&.category-investment]:bg-[#f0f2fd] category-${signal.category
+                        className={`signal-category ${radar ? "flex h-[24px] px-[8px] py-[4px] justify-center items-center gap-[10px] rounded-[4px] text-[12px] leading-[16px] font-medium tracking-[0.24px] capitalize text-[#BA4ACF] bg-[#FAF5FF]" : "rounded-[3px] text-[10px] leading-[1.7] p-[0_6px] text-[#a658b4] bg-[#f9effc]"} whitespace-nowrap [&.category-conversion]:text-[#c39d21] [&.category-conversion]:bg-[#fff9e8] [&.category-transactional]:text-[#737cdb] [&.category-transactional]:bg-[#f0f0ff] [&.category-momentum]:text-[#439b81] [&.category-momentum]:bg-[#edf9f4] [&.category-lifecycle]:text-[#439b81] [&.category-lifecycle]:bg-[#edf9f4] [&.category-macro]:text-[#697bc1] [&.category-macro]:bg-[#f0f2fd] [&.category-rates]:text-[#697bc1] [&.category-rates]:bg-[#f0f2fd] [&.category-market-outlook]:text-[#697bc1] [&.category-market-outlook]:bg-[#f0f2fd] [&.category-investment]:text-[#697bc1] [&.category-investment]:bg-[#f0f2fd] category-${signal.category
                             .toLowerCase()
                             .replaceAll(" ", "-")}`}
                     >
                         {signal.category}
                     </span>
                     <span
-                        className={`impact rounded-[3px] text-[9px] leading-[1.7] p-[0_6px] whitespace-nowrap [border:1px_solid_#d8eaf3] bg-[#f0f8fd] text-[#468ba7] font-semibold [&.impact-high]:bg-[#fff1f4] [&.impact-high]:border-[#ffd8e3] [&.impact-high]:text-[#d45575] [&.impact-low]:text-[#939da8] [&.impact-low]:bg-[#f5f6f9] [&.impact-low]:border-[#e8ebf1] impact-${signal.impact.toLowerCase()}`}
+                        className={`impact ${radar ? "flex flex-col items-start h-[24px] px-[8px] py-[4px] rounded-[4px] text-[12px] leading-[14px] font-normal tracking-[0.25px] uppercase [border:1px_solid_#BAE6FD] bg-[#F0F9FF] text-[#0369A1]" : "rounded-[3px] text-[9px] leading-[1.7] p-[0_6px] [border:1px_solid_#d8eaf3] bg-[#f0f8fd] text-[#468ba7] font-semibold"} whitespace-nowrap [&.impact-high]:bg-[#fff1f4] [&.impact-high]:border-[#ffd8e3] [&.impact-high]:text-[#d45575] [&.impact-low]:text-[#939da8] [&.impact-low]:bg-[#f5f6f9] [&.impact-low]:border-[#e8ebf1] impact-${signal.impact.toLowerCase()}`}
                     >
                         {signal.impact.toUpperCase()} IMPACT
                     </span>
@@ -175,7 +184,9 @@ export function SignalCard({
             </div>
             <h3>{signal.title}</h3>
             <p>{signal.description}</p>
-            <div className="signal-meta flex flex-wrap items-baseline gap-[5px_18px] text-[10px] text-[#92979a] mt-[9px] [&_b]:text-[#699b8f] [&_b]:font-medium [&_time]:ml-auto [&_time]:whitespace-nowrap mobile:gap-[6px_12px] mobile:[&_time]:ml-[0]">
+            <div
+                className={`signal-meta flex w-full flex-wrap items-baseline gap-[5px_18px] [&_time]:ml-auto [&_time]:whitespace-nowrap mobile:gap-[6px_12px] mobile:[&_time]:ml-0 ${radar ? "text-[14px] font-normal text-[#5C706B] mt-[14px] rounded-[4px] bg-[#F8FAFC] [&_b]:text-[#036652] [&_b]:font-normal [&_b]:leading-[1.5]" : "text-[10px] text-[#92979a] mt-[9px] [&_b]:text-[#699b8f] [&_b]:font-medium"}`}
+            >
                 <span>
                     Affected Segment: <b>{signal.segment}</b>
                 </span>
@@ -210,7 +221,9 @@ export function SignalCard({
             {content}
         </button>
     ) : (
-        <article className="signal-card text-left bg-white p-[17px_20px_15px] [border:1px_solid_var(--border)] shadow-[0_1px_3px_#223b3509] rounded-[9px] w-full min-w-0 [&_h3]:text-[#226d5c] [&_h3]:font-[650] [&_h3]:text-[14px] [&_h3]:leading-[1.4] [&_h3]:mb-[5px] [&_p]:text-[12px] [&_p]:text-[#777e84] [&_p]:leading-[1.65] mobile:p-[14px] mobile:[&_p]:text-[11px]">
+        <article
+            className={`signal-card text-left bg-white w-full min-w-0 ${radar ? "flex flex-col items-start p-[20px] [border:1px_solid_#DBE6E2] shadow-[0_1px_3px_0_rgba(41,53,50,0.07)] rounded-[12px] [&_h3]:text-[#036652] [&_h3]:font-medium [&_h3]:text-[16px] [&_h3]:leading-[1.4] [&_p]:text-[14px] [&_p]:font-normal [&_p]:text-[#5C706B] [&_p]:leading-[1.5]" : "p-[17px_20px_15px] [border:1px_solid_var(--border)] shadow-[0_1px_3px_#223b3509] rounded-[9px] [&_h3]:text-[#226d5c] [&_h3]:font-[650] [&_h3]:text-[14px] [&_h3]:leading-[1.4] [&_h3]:mb-[5px] [&_p]:text-[12px] [&_p]:text-[#777e84] [&_p]:leading-[1.65] mobile:p-[14px] mobile:[&_p]:text-[11px]"}`}
+        >
             {content}
         </article>
     );
@@ -328,15 +341,25 @@ export function IdeaActions({
     );
 }
 
-export function IdeaBadges({ idea }: { idea: Idea }) {
+export function IdeaBadges({
+    idea,
+    specified = false,
+}: {
+    idea: Idea;
+    specified?: boolean;
+}) {
     return (
-        <div className="tag-row flex items-center gap-[7px] flex-wrap">
+        <div
+            className={`tag-row flex items-center flex-wrap ${specified ? "gap-[8px]" : "gap-[7px]"}`}
+        >
             <span
-                className={`priority rounded-[3px] text-[9px] leading-[1.7] p-[0_6px] whitespace-nowrap [border:1px_solid] font-medium [&.priority-high]:text-[#e44e75] [&.priority-high]:border-[#f5bdce] [&.priority-high]:bg-[#fff1f5] [&.priority-medium]:text-[#4d90a9] [&.priority-medium]:border-[#d2e7f1] [&.priority-medium]:bg-[#eff8fc] [&.priority-low]:text-[#879399] [&.priority-low]:border-[#dfe6e8] [&.priority-low]:bg-[#f4f7f8] priority-${idea.priority.toLowerCase()}`}
+                className={`priority ${specified ? "flex flex-col items-start p-[2px_8px] rounded-[4px] [&.priority-high]:border-[#FDBABA] [&.priority-high]:bg-[#FFF0F0]" : "rounded-[3px] p-[0_6px] [&.priority-high]:border-[#f5bdce] [&.priority-high]:bg-[#fff1f5]"} text-[9px] leading-[1.7] whitespace-nowrap [border:1px_solid] font-medium [&.priority-high]:text-[#e44e75] [&.priority-medium]:text-[#4d90a9] [&.priority-medium]:border-[#d2e7f1] [&.priority-medium]:bg-[#eff8fc] [&.priority-low]:text-[#879399] [&.priority-low]:border-[#dfe6e8] [&.priority-low]:bg-[#f4f7f8] priority-${idea.priority.toLowerCase()}`}
             >
                 {idea.priority.toUpperCase()} PRIORITY
             </span>
-            <span className="score-tag rounded-[3px] text-[10px] leading-[1.7] p-[0_6px] whitespace-nowrap text-[#5c8c80] bg-[#f1f6f4] [border:1px_solid_#e9efed] [&_.anticon]:mr-[3px]">
+            <span
+                className={`score-tag text-[10px] leading-[1.7] whitespace-nowrap text-[#5c8c80] ${specified ? "flex items-center gap-[4px] rounded-[4px] p-[2px_8px] bg-[#F2F8F7] [border:1px_solid_#E1EFEC]" : "rounded-[3px] p-[0_6px] bg-[#f1f6f4] [border:1px_solid_#e9efed] [&_.anticon]:mr-[3px]"}`}
+            >
                 <RiseOutlined /> Score {idea.score} / 100
             </span>
         </div>
@@ -349,20 +372,29 @@ export function IdeaCard({
     onDetails,
     ...actions
 }: IdeaActionsProps & { onDetails?: (idea: Idea) => void }) {
+    const leads = module === "leads";
     return (
-        <article className="idea-card [&_h3]:text-[#226d5c] [&_h3]:font-[650] [&_h3]:text-[15px] [&_h3]:leading-[1.4] [&_h3]:mb-[6px] p-[16px_19px_9px] mobile:p-[14px_13px_8px] mobile:[&_h3]:text-[14px] surface bg-white [border:1px_solid_var(--border)] shadow-[0_1px_3px_#223b3510] rounded-[9px]">
-            <div className="idea-card-top flex items-center justify-between gap-[12px] mb-[7px] mobile:items-start">
-                <IdeaBadges idea={idea} />
+        <article
+            className={`idea-card surface bg-white min-w-0 [&_h3]:leading-[1.4] ${leads ? "flex flex-col items-start gap-[8px] self-stretch p-[16px_20px] [border:1px_solid_rgba(229,231,235,0.9)] shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] rounded-[12px] [&_h3]:text-[#09695D] [&_h3]:font-semibold [&_h3]:text-[18px] [&_h3]:tracking-[-0.45px]" : "[&_h3]:text-[#226d5c] [&_h3]:font-[650] [&_h3]:text-[15px] [&_h3]:mb-[6px] p-[16px_19px_9px] mobile:p-[14px_13px_8px] mobile:[&_h3]:text-[14px] [border:1px_solid_var(--border)] shadow-[0_1px_3px_#223b3510] rounded-[9px]"}`}
+        >
+            <div
+                className={`idea-card-top flex w-full items-center justify-between gap-[12px] mobile:items-start ${leads ? "mobile:flex-wrap" : "mb-[7px]"}`}
+            >
+                <IdeaBadges idea={idea} specified={leads} />
                 <IdeaActions idea={idea} module={module} {...actions} />
             </div>
             <h3>{idea.title}</h3>
             <Tooltip title={idea.description}>
-                <p className="idea-description [display:-webkit-box] [-webkit-line-clamp:2] [-webkit-box-orient:vertical] overflow-hidden text-[#7e8289] leading-[1.65] text-[11px]">
+                <p
+                    className={`idea-description w-full [display:-webkit-box] [-webkit-line-clamp:2] [-webkit-box-orient:vertical] overflow-hidden ${leads ? "text-[#4B5563] text-[14px] leading-[1.5] font-normal" : "text-[#7e8289] leading-[1.65] text-[11px]"}`}
+                >
                     {idea.description}
                 </p>
             </Tooltip>
             <div
-                className={`idea-metadata grid grid-cols-[1fr_1fr_1fr] gap-[22px] m-[14px_0_12px] [&.with-author]:grid-cols-[1fr_1fr_1fr_0.75fr] [&_>_div]:min-w-0 [&_label]:text-[9px] [&_label]:tracking-[0.5px] [&_label]:text-[#a2a5ac] [&_label]:block [&_label]:mb-[5px] [&_.ellipsis]:text-[11px] [&_.ellipsis]:text-[#5c7e71] tablet:[&.with-author]:grid-cols-[1fr_1fr] tablet:[&.with-author]:gap-[14px] mobile:grid-cols-[1fr] mobile:gap-[10px] mobile:[&.with-author]:grid-cols-[1fr_1fr] ${module !== "leads" ? "with-author" : ""}`}
+                // 8px card gap + 6px margin = 14px to the field container;
+                // the container's 6px padding is internal spacing.
+                className={`idea-metadata grid w-full grid-cols-[1fr_1fr_1fr] gap-[22px] [&_>_div]:min-w-0 [&_label]:tracking-[0.5px] [&_label]:block [&_label]:mb-[5px] ${leads ? "mt-[6px] py-[6px] [&_label]:text-[12px] [&_label]:text-[#9CA3AF] [&_label]:font-normal [&_label]:uppercase [&_.ellipsis]:text-[14px] [&_.ellipsis]:font-normal [&_.ellipsis]:text-[#075347]" : "m-[14px_0_12px] [&.with-author]:grid-cols-[1fr_1fr_1fr_0.75fr] [&_label]:text-[9px] [&_label]:text-[#a2a5ac] [&_.ellipsis]:text-[11px] [&_.ellipsis]:text-[#5c7e71] tablet:[&.with-author]:grid-cols-[1fr_1fr] tablet:[&.with-author]:gap-[14px]"} mobile:grid-cols-[1fr] mobile:gap-[10px] mobile:[&.with-author]:grid-cols-[1fr_1fr] ${!leads ? "with-author" : ""}`}
             >
                 <div>
                     <label>PRODUCT CATEGORY</label>
@@ -396,8 +428,12 @@ export function IdeaCard({
                     </div>
                 )}
             </div>
-            <div className="idea-card-footer flex justify-between items-center gap-[15px] [border-top:1px_solid_#f4f5f7] pt-[6px] [&_.ant-btn]:text-[10px] [&_.ant-btn]:text-[#54796c] [&_.ant-btn:disabled]:text-[#abb4b0] mobile:gap-[5px]">
-                <div className="channel-tags flex gap-[6px] flex-wrap [&_span]:text-[9px] [&_span]:text-[#747a81] [&_span]:p-[2px_7px] [&_span]:bg-[#f6f6f9] [&_span]:rounded-[3px] mobile:[&_span]:text-[8px] mobile:[&_span]:px-[4px]">
+            <div
+                className={`idea-card-footer flex w-full justify-between items-center gap-[15px] [border-top:1px_solid_#f4f5f7] [&_.ant-btn]:text-[10px] [&_.ant-btn]:text-[#54796c] [&_.ant-btn:disabled]:text-[#abb4b0] mobile:gap-[5px] ${leads ? "pt-[10px] mobile:flex-wrap" : "pt-[6px]"}`}
+            >
+                <div
+                    className={`channel-tags flex gap-[6px] flex-wrap ${leads ? "[&_span]:flex [&_span]:flex-col [&_span]:items-start [&_span]:text-[12px] [&_span]:font-normal [&_span]:text-[#374151] [&_span]:p-[2px_10px] [&_span]:bg-[#F3F4F6] [&_span]:rounded-[4px]" : "[&_span]:text-[9px] [&_span]:text-[#747a81] [&_span]:p-[2px_7px] [&_span]:bg-[#f6f6f9] [&_span]:rounded-[3px] mobile:[&_span]:text-[8px] mobile:[&_span]:px-[4px]"}`}
+                >
                     {idea.channels.map((channel) => (
                         <span key={channel}>
                             {channel === "Push Notification"
