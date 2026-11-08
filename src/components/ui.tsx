@@ -27,13 +27,13 @@ export function PageHeading({
 }) {
     return (
         <div
-            className={`page-heading flex justify-between items-center gap-[24px] [&_h1]:leading-[1.25] [&_p]:mt-[5px] [&_p]:leading-[1.6] tablet:items-start mobile:flex-wrap mobile:gap-[10px] ${specified ? "mb-[16px] [&_h1]:text-[20px] [&_h1]:font-semibold [&_h1]:text-[#153233] [&_p]:text-[#64748B] [&_p]:text-[14px] [&_p]:font-medium" : "mb-[24px] [&_h1]:text-[24px] [&_h1]:font-bold [&_h1]:text-[#263e37] [&_h1]:tracking-[-0.4px] [&_p]:text-[#818698] [&_p]:text-[13px] mobile:mb-[20px] mobile:[&_h1]:text-[22px] mobile:[&_p]:text-[12px]"}`}
+            className={`page-heading [&_h1]:leading-[1.25] [&_p]:leading-[1.6] ${specified ? "mb-[16px] [&_h1]:text-[20px] [&_h1]:font-semibold [&_h1]:text-[#153233] [&_p]:text-[#64748B] [&_p]:text-[14px] [&_p]:font-medium" : "mb-[24px] [&_h1]:text-[24px] [&_h1]:font-bold [&_h1]:text-[#263e37] [&_h1]:tracking-[-0.4px] [&_p]:text-[#818698] [&_p]:text-[13px] mobile:mb-[20px] mobile:[&_h1]:text-[22px] mobile:[&_p]:text-[12px]"}`}
         >
-            <div>
-                <h1>{title}</h1>
-                <p>{description}</p>
+            <h1>{title}</h1>
+            <div className="mt-[5px] flex items-baseline justify-between gap-[24px] mobile:flex-wrap mobile:gap-[10px]">
+                <p className="min-w-0">{description}</p>
+                {extra}
             </div>
-            {extra}
         </div>
     );
 }
@@ -212,7 +212,7 @@ export function SignalCard({
             role="checkbox"
             aria-checked={!!selected}
             aria-label={signal.title}
-            aria-disabled={!!selected || !!limited}
+            aria-disabled={!!limited}
             onClick={onSelect}
             className={`signal-card text-left bg-white p-[17px_20px_15px] [border:1px_solid_var(--border)] shadow-[0_1px_3px_#223b3509] rounded-[9px] w-full min-w-0 [&_h3]:text-[#226d5c] [&_h3]:font-[650] [&_h3]:text-[14px] [&_h3]:leading-[1.4] [&_h3]:mb-[5px] [&_p]:text-[12px] [&_p]:text-[#777e84] [&_p]:leading-[1.65] mobile:p-[14px] mobile:[&_p]:text-[11px] selectable [transition:border-color_0.15s,_background_0.15s] [&:hover:not(.selected)]:border-[#75bca3] [&.selected]:border-[#00a27a] [&.selected]:bg-[#fcfffd] [&.limited]:bg-[#fafafa] [&.limited]:opacity-[0.57] [&.limited]:cursor-not-allowed ${selected ? "selected" : ""} ${
                 limited ? "limited" : ""
@@ -236,6 +236,7 @@ interface IdeaActionsProps {
     onPublish?: (idea: Idea) => Promise<void> | void;
     onCopy?: (idea: Idea) => Promise<void> | void;
     onDelete?: (idea: Idea) => void;
+    onEdit?: (idea: Idea) => void;
 }
 
 export function IdeaActions({
@@ -244,6 +245,7 @@ export function IdeaActions({
     onPublish,
     onCopy,
     onDelete,
+    onEdit,
 }: IdeaActionsProps) {
     const [busy, setBusy] = useState(false);
     async function publish() {
@@ -266,32 +268,52 @@ export function IdeaActions({
     }
     if (module === "validation")
         return (
-            <div className="idea-actions flex items-center gap-[3px] shrink-0 [&_.ant-btn]:text-[#90959b] [&_.ant-btn]:text-[11px] [&_.ant-btn:not(:disabled):hover]:text-[var(--teal)] [&_.ant-btn:disabled]:text-[#bfc3ca] mobile:gap-[0] mobile:[&_.ant-btn]:px-[5px] mobile:[&_.ant-btn]:text-[10px]">
-                <Tooltip title="Locking will be available in a later update">
+            <div className="idea-actions validation-actions flex items-center gap-[3px] shrink-0 [&_.ant-btn]:text-[#90959b] [&_.ant-btn]:text-[11px] [&_.ant-btn:not(:disabled):hover]:text-[var(--teal)] [&_.ant-btn:disabled]:text-[#bfc3ca]">
+                {idea.validation?.lock && (
+                    <Tooltip title={`Editing by ${idea.validation.lock.name}`}>
+                        <Button
+                            type="text"
+                            size="small"
+                            aria-label={`Editing by ${idea.validation.lock.name}`}
+                            icon={<LockOutlined />}
+                        />
+                    </Tooltip>
+                )}
+                <Tooltip
+                    title={
+                        idea.validation?.status === "validated"
+                            ? "Reopen validation before editing"
+                            : idea.validation?.lock
+                              ? `Editing by ${idea.validation.lock.name}`
+                              : "Edit idea"
+                    }
+                >
                     <Button
-                        disabled
+                        disabled={
+                            !!idea.validation?.lock ||
+                            idea.validation?.status === "validated"
+                        }
                         type="text"
                         size="small"
-                        aria-label="Lock unavailable"
-                        icon={<LockOutlined />}
-                    />
-                </Tooltip>
-                <Tooltip title="Editing will be available in a later update">
-                    <Button
-                        disabled
-                        type="text"
-                        size="small"
-                        aria-label="Edit unavailable"
+                        aria-label={`Edit ${idea.title}`}
                         icon={<EditOutlined />}
+                        onClick={() => onEdit?.(idea)}
                     />
                 </Tooltip>
-                <Tooltip title="Deletion will be available in a later update">
+                <Tooltip
+                    title={
+                        idea.validation?.lock
+                            ? `Editing by ${idea.validation.lock.name}`
+                            : "Delete idea"
+                    }
+                >
                     <Button
-                        disabled
+                        disabled={!!idea.validation?.lock}
                         type="text"
                         size="small"
-                        aria-label="Delete unavailable"
+                        aria-label={`Delete ${idea.title}`}
                         icon={<DeleteOutlined />}
+                        onClick={() => onDelete?.(idea)}
                     />
                 </Tooltip>
             </div>
@@ -380,7 +402,18 @@ export function IdeaCard({
             <div
                 className={`idea-card-top flex w-full items-center justify-between gap-[12px] mobile:items-start ${leads ? "mobile:flex-wrap" : "mb-[7px]"}`}
             >
-                <IdeaBadges idea={idea} specified={leads} />
+                <div className="flex flex-wrap items-center gap-[7px]">
+                    <IdeaBadges idea={idea} specified={leads} />
+                    {module === "validation" && (
+                        <span
+                            className={`validation-status ${idea.validation?.status === "validated" ? "is-validated" : ""}`}
+                        >
+                            {idea.validation?.status === "validated"
+                                ? `Validated ${idea.validation.rating?.score.toFixed(2) ?? "0.00"} / 5`
+                                : "Draft"}
+                        </span>
+                    )}
+                </div>
                 <IdeaActions idea={idea} module={module} {...actions} />
             </div>
             <h3>{idea.title}</h3>
@@ -444,21 +477,13 @@ export function IdeaCard({
                         </span>
                     ))}
                 </div>
-                {module === "validation" ? (
-                    <Tooltip title="Read-only details will be available in a later update">
-                        <Button type="link" disabled size="small">
-                            View Details <ArrowRightOutlined />
-                        </Button>
-                    </Tooltip>
-                ) : (
-                    <Button
-                        type="link"
-                        size="small"
-                        onClick={() => onDetails?.(idea)}
-                    >
-                        View Details <ArrowRightOutlined />
-                    </Button>
-                )}
+                <Button
+                    type="link"
+                    size="small"
+                    onClick={() => onDetails?.(idea)}
+                >
+                    View Details <ArrowRightOutlined />
+                </Button>
             </div>
         </article>
     );

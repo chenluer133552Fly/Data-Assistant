@@ -32,6 +32,28 @@ export function WorkspaceProvider({ children }: PropsWithChildren) {
             setLoading(false);
         }
     }, []);
+
+    useEffect(() => {
+        let active = true;
+        const refresh = () => {
+            void mockApi
+                .load()
+                .then((value) => {
+                    if (active) update(value);
+                })
+                .catch(() => {});
+        };
+        const onStorage = (event: StorageEvent) => {
+            if (event.key === "meridian:database:v1") refresh();
+        };
+        window.addEventListener("storage", onStorage);
+        window.addEventListener("focus", refresh);
+        return () => {
+            active = false;
+            window.removeEventListener("storage", onStorage);
+            window.removeEventListener("focus", refresh);
+        };
+    }, []);
     useEffect(() => {
         let active = true;
         void mockApi

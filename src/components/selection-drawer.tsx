@@ -31,7 +31,15 @@ export function SelectionDrawer({
     const { message } = App.useApp();
     const signals = tab === "customer" ? customerSignals : marketSignals;
     function select(id: string) {
-        if (draft.signalIds.includes(id)) return;
+        if (draft.signalIds.includes(id)) {
+            setDraft((previous) => ({
+                ...previous,
+                signalIds: previous.signalIds.filter(
+                    (selected) => selected !== id,
+                ),
+            }));
+            return;
+        }
         if (draft.signalIds.length >= 5) {
             void message.warning("Select up to 5 items");
             return;
@@ -144,8 +152,8 @@ export function SelectionDrawer({
                             Reselect signals
                         </Button>
                         <span>
-                            Selected signals stay selected. Use Reselect to
-                            start again.
+                            Click a selected signal to deselect it, or Reselect
+                            to start again.
                         </span>
                     </div>
                     <div className="signal-list flex flex-col gap-[12px]">

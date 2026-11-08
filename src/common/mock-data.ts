@@ -7,7 +7,11 @@ import type {
     SignalSource,
 } from "./types";
 
-export const CURRENT_USER = { id: "ember", name: "Ember Gao" };
+export const CURRENT_USER = {
+    id: "ember",
+    name: "Ember Gao",
+    canValidate: true,
+};
 export const PRODUCTS: Product[] = ["FX", "Mortgage", "Wealth", "Cards"];
 export const FOCUS_PRODUCT_OPTIONS: { value: Product; label: string }[] = [
     { value: "FX", label: "FX (Foreign Exchange)" },

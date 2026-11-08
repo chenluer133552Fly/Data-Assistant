@@ -42,6 +42,54 @@ export interface Idea {
     selection: Selection;
     copiedById?: string;
     copiedBy?: string;
+    validation?: ValidationState;
+}
+
+export type IdeaSnapshot = Omit<Idea, "validation">;
+export interface IdeaComment {
+    id: string;
+    authorId: string;
+    author: string;
+    text: string;
+    createdAt: string;
+    updatedAt?: string;
+}
+export interface ValidationLog {
+    id: string;
+    action:
+        | "copy"
+        | "edit"
+        | "validate"
+        | "reopen"
+        | "comment-add"
+        | "comment-edit"
+        | "comment-delete";
+    author: string;
+    createdAt: string;
+    detail?: string;
+    before?: Record<string, string>;
+    after?: Record<string, string>;
+}
+export interface ValidationState {
+    source: IdeaSnapshot;
+    content: Record<string, string>;
+    status: "draft" | "validated";
+    revision: number;
+    lock?: { userId: string; name: string; token: string };
+    rating?: {
+        dimensions: number[];
+        score: number;
+        author: string;
+        createdAt: string;
+    };
+    comments: IdeaComment[];
+    logs: ValidationLog[];
+}
+export interface DashboardData {
+    counts: { customer: number; cio: number; ideas: number; validated: number };
+    tasks: Idea[];
+    recent: Idea[];
+    signals: Signal[];
 }
 
 export interface Database {

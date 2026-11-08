@@ -1,6 +1,7 @@
 import { Avatar, Button, ConfigProvider, App as AntApp } from "antd";
 import {
     BulbOutlined,
+    DashboardOutlined,
     DoubleRightOutlined,
     GlobalOutlined,
     InboxOutlined,
@@ -9,12 +10,13 @@ import {
     UserOutlined,
 } from "@ant-design/icons";
 import { useState } from "react";
-import { BrowserRouter, NavLink } from "react-router-dom";
+import { createBrowserRouter, NavLink, RouterProvider } from "react-router-dom";
 import { WorkspaceProvider } from "./common/workspace";
 import { GenerationTasks } from "./components/generation-tasks";
 import AppRoutes from "./common/router";
 
 const navigation = [
+    { path: "/dashboard", label: "Dashboard", icon: <DashboardOutlined /> },
     {
         path: "/intelligence",
         label: "Intelligence Radar",
@@ -98,6 +100,17 @@ function Shell() {
     );
 }
 
+const router = createBrowserRouter([
+    {
+        path: "*",
+        element: (
+            <WorkspaceProvider>
+                <Shell />
+            </WorkspaceProvider>
+        ),
+    },
+]);
+
 export default function App() {
     return (
         <ConfigProvider
@@ -125,11 +138,7 @@ export default function App() {
             }}
         >
             <AntApp message={{ duration: 3, maxCount: 3 }}>
-                <BrowserRouter>
-                    <WorkspaceProvider>
-                        <Shell />
-                    </WorkspaceProvider>
-                </BrowserRouter>
+                <RouterProvider router={router} />
             </AntApp>
         </ConfigProvider>
     );

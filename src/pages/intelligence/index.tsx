@@ -1,11 +1,13 @@
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Empty, Select, Tabs } from "antd";
 import { ClockCircleOutlined } from "@ant-design/icons";
 import { cioSignals, customerSignals, PRODUCTS } from "../../common/mock-data";
 import { ListPagination, PageHeading, SignalCard } from "../../components/ui";
 
 export default function IntelligencePage() {
-    const [tab, setTab] = useState("customer");
+    const [searchParams, setSearchParams] = useSearchParams();
+    const tab = searchParams.get("tab") === "cio" ? "cio" : "customer";
     const [product, setProduct] = useState<string>();
     const [category, setCategory] = useState<string>();
     const [sort, setSort] = useState("newest");
@@ -31,7 +33,7 @@ export default function IntelligencePage() {
                 title="Intelligence Rader"
                 description="Customer signals, CIO insights from the Chief Investment Office, omni-channel behaviors."
                 extra={
-                    <span className="sync-label text-[#5C706B] text-[14px] font-normal leading-normal whitespace-nowrap [&_b]:text-[#036652] [&_b]:font-normal [&_.anticon]:mr-[3px] compact:whitespace-normal compact:max-w-[180px] compact:text-right mobile:max-w-none mobile:text-left">
+                    <span className="sync-label shrink-0 text-[#5C706B] text-[14px] font-normal leading-normal whitespace-nowrap [&_b]:text-[#036652] [&_b]:font-normal [&_.anticon]:mr-[3px]">
                         <ClockCircleOutlined /> Last synced:{" "}
                         <b>Oct 30, 2026 · 08:17 HKT</b>
                     </span>
@@ -41,7 +43,7 @@ export default function IntelligencePage() {
                 activeKey={tab}
                 className="radar-tabs [&_.ant-tabs-nav]:mb-0 [&_.ant-tabs-nav::before]:border-0 [&_.ant-tabs-tab]:pt-0 [&_.ant-tabs-tab]:text-[14px] [&_.ant-tabs-tab]:font-normal [&_.ant-tabs-tab-btn]:text-[#5C706B] [&_.ant-tabs-tab-btn]:flex [&_.ant-tabs-tab-btn]:items-center [&_.ant-tabs-tab-active_.ant-tabs-tab-btn]:text-[#036652] [&_.ant-tabs-tab-active_.ant-tabs-tab-btn]:[text-shadow:none] [&_.ant-tabs-tab-active_.tab-count]:text-[#036652]"
                 onChange={(key) => {
-                    setTab(key);
+                    setSearchParams({ tab: key });
                     setCategory(undefined);
                     setPage(1);
                 }}

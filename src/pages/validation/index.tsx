@@ -1,4 +1,7 @@
 import { useState } from "react";
+import "./style.css";
+import { useNavigate } from "react-router-dom";
+import { useIdeaOperations } from "../../components/use-idea-operations";
 import { useWorkspace } from "../../common/use-workspace";
 import { IdeaFilters } from "../../components/idea-filters";
 import { filterIdeas, initialQuery } from "../../common/idea-query";
@@ -11,7 +14,11 @@ import {
 
 export default function ValidationPage() {
     const { database, loading, error, reload } = useWorkspace();
+    const navigate = useNavigate();
     const [query, setQuery] = useState(initialQuery);
+    const { remove, dialogs } = useIdeaOperations("validation", () =>
+        setQuery((previous) => ({ ...previous, page: 1 })),
+    );
     const ideas = filterIdeas(database.validation, query, "validation");
     return (
         <>
@@ -41,6 +48,15 @@ export default function ValidationPage() {
                                 key={idea.id}
                                 idea={idea}
                                 module="validation"
+                                onDetails={(idea) =>
+                                    void navigate(`/validation/${idea.id}`)
+                                }
+                                onEdit={(idea) =>
+                                    void navigate(
+                                        `/validation/${idea.id}?edit=1`,
+                                    )
+                                }
+                                onDelete={remove}
                             />
                         ))
                 )}
@@ -50,6 +66,7 @@ export default function ValidationPage() {
                 total={ideas.length}
                 onChange={(page) => setQuery({ ...query, page })}
             />
+            {dialogs}
         </>
     );
 }

@@ -10,10 +10,11 @@ import { useWorkspace } from "../common/use-workspace";
 import type { Idea } from "../common/types";
 
 export function useIdeaOperations(
-    module: "leads" | "community",
+    module: "leads" | "community" | "validation",
     onRemoved?: () => void,
+    editToken?: string,
 ) {
-    const { message } = App.useApp();
+    const { message, notification } = App.useApp();
     const { update } = useWorkspace();
     const navigate = useNavigate();
     const [publishTarget, setPublishTarget] = useState<Idea | null>(null);
@@ -65,7 +66,7 @@ export function useIdeaOperations(
         if (!deleteTarget || busy) return;
         setBusy(true);
         try {
-            update(await mockApi.remove(module, deleteTarget.id));
+            update(await mockApi.remove(module, deleteTarget.id, editToken));
             setDeleteTarget(null);
             onRemoved?.();
             void message.success("Idea deleted");
@@ -77,21 +78,40 @@ export function useIdeaOperations(
     }
     async function copy(idea: Idea) {
         try {
-            update(await mockApi.copy(idea));
-            void message.open({
+            const result = await mockApi.copy(idea);
+            const copyId = result.validation[0].id;
+            update(result);
+            notification.success({
                 key: "copy-success",
-                type: "success",
                 duration: 3,
-                className:
-                    "copy-toast [&.ant-message-notice]:fixed [&.ant-message-notice]:bottom-[32px] [&.ant-message-notice]:top-[auto] [&.ant-message-notice]:left-[0] [&.ant-message-notice]:right-[0] [&_.ant-btn]:ml-[8px] mobile:[&_.ant-message-notice-content]:max-w-[calc(100vw_-_24px)] mobile:[&_.ant-message-notice-content]:text-[11px]",
-                content: (
+                placement: "bottom",
+                closable: false,
+                pauseOnHover: false,
+                role: "status",
+                className: "copy-toast",
+                style: {
+                    width: "max-content",
+                    maxWidth: "calc(100vw - 24px)",
+                    padding: "10px 14px",
+                },
+                styles: {
+                    title: {
+                        fontSize: 12,
+                        fontWeight: 400,
+                        marginBottom: 0,
+                        marginInlineStart: 24,
+                    },
+                    icon: { fontSize: 15, lineHeight: "24px" },
+                },
+                title: (
                     <span>
                         Editable copy created in Validation{" "}
                         <Button
                             size="small"
+                            style={{ marginLeft: 8 }}
                             onClick={() => {
-                                message.destroy("copy-success");
-                                void navigate("/validation");
+                                notification.destroy("copy-success");
+                                void navigate(`/validation/${copyId}`);
                             }}
                         >
                             View
@@ -150,9 +170,11 @@ export function useIdeaOperations(
                 width={460}
             >
                 <p className="modal-description m-[18px_0_20px] text-[#6d7973] leading-[1.8] text-[13px]">
-                    {module === "community"
-                        ? "This will remove your idea from Ideation Community. The original idea in Leads Ideation and any copies in Validation will remain available."
-                        : "This will permanently delete this idea from Leads Ideation. Any versions already published to Ideation Community or copied to Validation will remain available."}
+                    {module === "validation"
+                        ? "This will delete this copy from Validation. The public idea in Ideation Community and all records in other modules will remain available."
+                        : module === "community"
+                          ? "This will remove your idea from Ideation Community. The original idea in Leads Ideation and any copies in Validation will remain available."
+                          : "This will permanently delete this idea from Leads Ideation. Any versions already published to Ideation Community or copied to Validation will remain available."}
                 </p>
             </Modal>
         </>

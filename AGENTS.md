@@ -392,3 +392,26 @@
 - `image-13.png` 在原文中未被引用；查看后与 `image-14.png` 均为 Make Public 确认弹窗，暂作为补充参考，不认定为独立流程。
 - 部分截图含设计工具选框、批注连线、工具栏和鼠标指针，这些内容不作为产品界面元素。
 - 截图与文字存在差异时，以正文中的明确要求及当前暂定规则为本期开发依据；正式接口和后续页面的待补充项见第 7 节。
+
+
+
+# 改动
+# noted ![alt text](image-14.png) 按照这里的提示去做.
+1. Ideation Community 模块里面卡片点击copy按钮后是在页面底部悬浮这个信息的 如图![alt text](image.png)
+2. 点击这个View 按钮直接可以去到Validation模块所对应的卡片的详情页.
+3. 需要修改一下Leads Ideation模块点击Constraints输入框后弹出Constraints抽屉选择那些卡片选中后再点卡片可以取消选中.
+
+# Validation 模块流程的补充.
+1. 前面是进来后直接展示首页没有问题。有个补充点就是Validation 里面 delete删除后从 Validation 列表中移除。Community 中的原始 Idea 不受影响(也就是说不同模块之间删除是不会联动的不管是从哪里copy过来的). 然后就是鼠标滑过当前卡片的时候展示当前卡片的操作icon(也就是锁, 编辑, 删除icon). ![alt text](image-2.png) 这个图是对于这几个操作的描述.
+2. 点击view details跳转到详情页如图![alt text](image-3.png). 然后如果用户点击View Source Public Idea的话则弹出![alt text](image-4.png)这个图是展示没有编辑详情页之前的原始数据.
+3. 点击编辑或者详情页里面的Edit按钮时的效果其实就是所有标题不能编辑只是里面标题所对应的内容能编辑
+例如 Idea Description只能编辑下面的描述, 还有USD Core Flow Deepening with Diversification Check
+header上面的这种标题.
+4. 点击详情页的Change Log按钮的时候展示![alt text](image-6.png), 切换到common tab时展示![alt text](image-7.png)， 当点击Edit tab的details按钮时展示![alt text](image-8.png)也就是说![alt text](image-15.png) 参考此图的效果去做尽量做到的效果就是按照此图的比对方式去展示.
+5. 详情页这里需要补充一下, 其实底部是有一个可以评论的一个地方.
+![alt text](image-10.png) 添加评论默认固定在视口底部. ![alt text](image-11.png)当点击后输入框撑高并出现操作按钮默认这个区域撑高到160px. 评论后滑动到底部可以查看刚刚的评论记录如图![alt text](image-9.png)
+6. 增加评分机制.![alt text](image-16.png)需要参考如图所示逻辑, 进入到validation卡片的详情页后如图
+![alt text](image-17.png), 点击validate按钮后唤起评分弹窗![alt text](image-18.png), 评分规则参考此图![alt text](image-19.png), 如果以有用户评分后![alt text](image-20.png)此时validate按钮就变成了Reopen validation.点击后![alt text](image-21.png).
+
+# 在Intelligence Rader菜单上面新增一个Dashboard的菜单
+1. ![alt text](image-12.png) 进入dashboard后页面展示如图. 如果用户有特殊权限可展示如图![alt text](image-13.png) 就是多了Validation Tasks模块(有validate权限的用户可看到Validation tasks模块，支持下钻到对应idea的detail页面). 点击customer signals 卡片跳转到intelligence rader 页面所对应的这个customer signals选中, 点击CIO ingisnts的话也是跳转到intelligence rader 页面所对应的这个CIO ingisnts选中, 点击campain ideas跳转到leads ideation 菜单所对应的页面, 点击Vallidated就跳到Vallidation页面.
